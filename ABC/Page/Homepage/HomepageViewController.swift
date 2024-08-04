@@ -9,15 +9,17 @@ import Foundation
 import UIKit
 
 final class HomepageViewController : UIViewController {
-    var viewModel : HomepageViewModel!
+    var viewModel: HomepageViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Weather Widget"
+        
+        viewModel.viewDidLoad()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.viewModel.openImagePicker()
         }
