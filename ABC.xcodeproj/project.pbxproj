@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F45D3FD2C61959E00412C43 /* HomepageContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F45D3FC2C61959E00412C43 /* HomepageContracts.swift */; };
 		2F6235ED2C5E7B170015C2E2 /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6235EC2C5E7B170015C2E2 /* HomepageViewController.swift */; };
 		2F6235F02C5F7DFC0015C2E2 /* ImagePickerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6235EF2C5F7DFC0015C2E2 /* ImagePickerCoordinator.swift */; };
 		2F6235F22C5F80830015C2E2 /* ImagePickerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6235F12C5F80830015C2E2 /* ImagePickerService.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2F45D3FC2C61959E00412C43 /* HomepageContracts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomepageContracts.swift; sourceTree = "<group>"; };
 		2F6235EC2C5E7B170015C2E2 /* HomepageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageViewController.swift; sourceTree = "<group>"; };
 		2F6235EF2C5F7DFC0015C2E2 /* ImagePickerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerCoordinator.swift; sourceTree = "<group>"; };
 		2F6235F12C5F80830015C2E2 /* ImagePickerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerService.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				2FCE1CEE2C5E57CA00483264 /* Main.storyboard */,
+				2F45D3FC2C61959E00412C43 /* HomepageContracts.swift */,
 				2FCE1D262C5E6EE100483264 /* HomepageCoordinator.swift */,
 				2FCE1D282C5E6F3800483264 /* HomepageViewModel.swift */,
 				2F6235EC2C5E7B170015C2E2 /* HomepageViewController.swift */,
@@ -357,6 +360,7 @@
 				2FCE1D292C5E6F3800483264 /* HomepageViewModel.swift in Sources */,
 				2FCE1CE92C5E57CA00483264 /* AppDelegate.swift in Sources */,
 				2F6235F02C5F7DFC0015C2E2 /* ImagePickerCoordinator.swift in Sources */,
+				2F45D3FD2C61959E00412C43 /* HomepageContracts.swift in Sources */,
 				2FCE1D272C5E6EE100483264 /* HomepageCoordinator.swift in Sources */,
 				2F6235F22C5F80830015C2E2 /* ImagePickerService.swift in Sources */,
 				2FCE1CEB2C5E57CA00483264 /* SceneDelegate.swift in Sources */,

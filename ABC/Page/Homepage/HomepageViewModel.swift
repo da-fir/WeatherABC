@@ -12,7 +12,8 @@ import UIKit
 protocol HomepageNavigationDelegate: AnyObject {
     func openImagePicker(imagePickerDelegate: ImagePickerServiceDelegate)
 }
-class HomepageViewModel {
+
+class HomepageViewModel: HomepageViewModelProtocol {
     private(set) weak var navigationDelegate: HomepageNavigationDelegate!
     private var locationService: LocationServiceProtocol
     

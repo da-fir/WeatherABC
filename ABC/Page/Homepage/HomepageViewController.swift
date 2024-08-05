@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 final class HomepageViewController : UIViewController {
-    var viewModel: HomepageViewModel!
+    var viewModel: HomepageViewModelProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
