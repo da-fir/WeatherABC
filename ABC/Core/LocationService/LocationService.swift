@@ -14,6 +14,7 @@ public protocol LocationServiceDelegate: AnyObject {
 }
 public protocol LocationServiceProtocol: AnyObject {
     var delegate: LocationServiceDelegate? { get set }
+    var locationManager: CLLocationManager { get }
     func requestPermissionIfNeeded()
     func requestUserLocation()
     func requestUserLocation(handler: ((_ city: String?, _ country:  String?, _ error: Error?) -> Void)?)
@@ -21,7 +22,7 @@ public protocol LocationServiceProtocol: AnyObject {
 
 public final class LocationService: NSObject, LocationServiceProtocol {
     public weak var delegate: LocationServiceDelegate?
-    private let locationManager: CLLocationManager
+    public let locationManager: CLLocationManager
     private var handler: ((_ city: String?, _ country:  String?, _ error: Error?) -> Void)?
     
     public override init() {
@@ -72,7 +73,9 @@ extension LocationService: CLLocationManagerDelegate {
     }
     
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("KODOK>>> YEEY1")
         guard let location = locations.last else { return }
+        print("KODOK>>> YEEY2")
         location.fetchCityAndCountry { city, country, error in
             self.handler?(city, country, error)// send to handler if any
             self.delegate?.userLocationDidUpdate(location: (city, country, error))

@@ -8,42 +8,44 @@
 import WidgetKit
 import SwiftUI
 
+var lastUpdateTime = Date()
 struct Provider: TimelineProvider {
     private var locationService: LocationServiceProtocol = LocationService()
     func placeholder(in context: Context) -> WidgetEntry {
-        WidgetEntry(date: Date(), imageURL: nil, title: "Surabaya, Indonesia")
+        print("Widget", "placeholder")
+        return WidgetEntry(date: Date(), imageURL: nil, title: "Surabaya, Indonesia")
     }
 
     func getSnapshot(in context: Context, completion: @escaping (WidgetEntry) -> ()) {
         let entry = WidgetEntry(date: Date(), imageURL: nil, title: "Mumbai, India")
         completion(entry)
+        print("Widget", "getSnapshoted")
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [WidgetEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = WidgetEntry(date: entryDate, imageURL: nil, title: "India")
-            entries.append(entry)
+        print("Widget", "locationService")
+        if !locationService.locationManager.isAuthorizedForWidgetUpdates {
+            locationService.requestPermissionIfNeeded()
         }
+        
+        print("Widget", "locationService - ED1", locationService.locationManager.authorizationStatus.rawValue)
+        
+        let differenceInSeconds = Int(Date().timeIntervalSince(lastUpdateTime))
+        if differenceInSeconds < 5 {
+            print("Widget", "locationService - ED2")
+            locationService.requestUserLocation { city, country, error in
+                print("Widget", "requestUserLocationed")
+                let entry = WidgetEntry(date: Date(), imageURL: nil, title: "\(city), \(country)")
+                // make sure that we get refreshed
+                // to be really usefull to the user it would be better to do this more like
+                // every 15 minutes. But, that would be more api calls per day than we get
+                let refreshDate = Calendar.current.date(byAdding: .minute, value: 60, to: Date())
+                let timeline = Timeline(entries: [entry], policy: .after(refreshDate!))
+                completion(timeline)
+            }
+        }
+        lastUpdateTime = Date()
     }
-    
-//    locationService.requestUserLocation { city, country, error in
-//        var entries: [WidgetEntry] = []
-//
-//        let currentDate = Date()
-//        for hourOffset in 0 ..< 5 {
-//            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-//            let entry = WidgetEntry(date: entryDate, imageURL: nil, title: "\(city), \(country)")
-//            entries.append(entry)
-//        }
-//
-//        let timeline = Timeline(entries: entries, policy: .atEnd)
-//        completion(timeline)
-//    }
 }
 
 struct WidgetEntry: TimelineEntry {
@@ -88,7 +90,7 @@ struct WeatherWidgetView: View {
             HeartyRecipeWidgetMediumView(imageURL: imageURL, title: title)
         case .systemLarge:
             HeartyRecipeWidgetLargeView(imageURL: imageURL, title: title)
-        @unknown default:
+        default:
             EmptyView()
         }
     }
@@ -111,7 +113,6 @@ struct HeartyRecipeWidgetSmallView: View {
             }
             .padding()
         }
-//        .widgetURL(recipe?.widgetURL)
     }
 }
 
