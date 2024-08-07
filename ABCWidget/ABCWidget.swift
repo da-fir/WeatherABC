@@ -9,72 +9,157 @@ import WidgetKit
 import SwiftUI
 
 struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), emoji: "😀")
+    private var locationService: LocationServiceProtocol = LocationService()
+    func placeholder(in context: Context) -> WidgetEntry {
+        WidgetEntry(date: Date(), imageURL: nil, title: "Surabaya, Indonesia")
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), emoji: "😀")
+    func getSnapshot(in context: Context, completion: @escaping (WidgetEntry) -> ()) {
+        let entry = WidgetEntry(date: Date(), imageURL: nil, title: "Mumbai, India")
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
+        var entries: [WidgetEntry] = []
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, emoji: "😀")
+            let entry = WidgetEntry(date: entryDate, imageURL: nil, title: "India")
             entries.append(entry)
         }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
     }
+    
+//    locationService.requestUserLocation { city, country, error in
+//        var entries: [WidgetEntry] = []
+//
+//        let currentDate = Date()
+//        for hourOffset in 0 ..< 5 {
+//            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
+//            let entry = WidgetEntry(date: entryDate, imageURL: nil, title: "\(city), \(country)")
+//            entries.append(entry)
+//        }
+//
+//        let timeline = Timeline(entries: entries, policy: .atEnd)
+//        completion(timeline)
+//    }
 }
 
-struct SimpleEntry: TimelineEntry {
+struct WidgetEntry: TimelineEntry {
     let date: Date
-    let emoji: String
+    let imageURL: String?
+    let title: String?
 }
 
-struct ABCWidgetEntryView : View {
+struct WeatherWidgetEntryView: View {
     var entry: Provider.Entry
 
     var body: some View {
-        VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-
-            Text("Emoji:")
-            Text(entry.emoji)
-        }
+        WeatherWidgetView(imageURL: entry.imageURL, title: entry.title)
     }
 }
 
-struct ABCWidget: Widget {
-    let kind: String = "ABCWidget"
+struct WeatherWidget: Widget {
+    let kind: String = "HeartyRecipeWidget"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            if #available(iOS 17.0, *) {
-                ABCWidgetEntryView(entry: entry)
-                    .containerBackground(.fill.tertiary, for: .widget)
-            } else {
-                ABCWidgetEntryView(entry: entry)
-                    .padding()
-                    .background()
-            }
+            WeatherWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Hearty Recipe Widget")
+        .description("Display a widget with a random recipe that is updated every 1 hour.")
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
 }
 
-#Preview(as: .systemSmall) {
-    ABCWidget()
-} timeline: {
-    SimpleEntry(date: .now, emoji: "😀")
-    SimpleEntry(date: .now, emoji: "🤩")
+struct WeatherWidgetView: View {
+    let imageURL: String?
+    let title: String?
+    
+    @Environment(\.widgetFamily) var family: WidgetFamily
+
+    @ViewBuilder
+    var body: some View {
+        switch family {
+        case .systemSmall:
+            HeartyRecipeWidgetSmallView(imageURL: imageURL, title: title)
+        case .systemMedium:
+            HeartyRecipeWidgetMediumView(imageURL: imageURL, title: title)
+        case .systemLarge:
+            HeartyRecipeWidgetLargeView(imageURL: imageURL, title: title)
+        @unknown default:
+            EmptyView()
+        }
+    }
+}
+
+struct HeartyRecipeWidgetSmallView: View {
+    let imageURL: String?
+    let title: String?
+    
+    var body: some View {
+        ZStack(alignment: .top) {
+            AsyncImage(url: URL(string: imageURL ?? ""))
+            VStack(alignment: .leading) {
+                AsyncImage(url: URL(string: imageURL ?? ""))
+                    .frame(height: 64)
+                    .cornerRadius(10)
+                
+                Text(title ?? "")
+                    .font(.system(size: 10, weight: .regular, design: .default))
+            }
+            .padding()
+        }
+//        .widgetURL(recipe?.widgetURL)
+    }
+}
+
+struct HeartyRecipeWidgetMediumView: View {
+    let imageURL: String?
+    let title: String?
+    
+    var body: some View {
+        ZStack(alignment: .top) {
+            Color(.white)
+            GeometryReader {
+                geometry in
+                HStack(alignment: .top) {
+                    AsyncImage(url: URL(string: imageURL ?? ""))
+                        .frame(width: geometry.size.height)
+                        .cornerRadius(10)
+                
+                    VStack(alignment: .leading) {
+                        Text(title ?? "")
+                            .font(.system(size: 10, weight: .regular, design: .default))
+                    }
+                }
+            }
+            .padding()
+        }
+    }
+}
+
+struct HeartyRecipeWidgetLargeView: View {
+    let imageURL: String?
+    let title: String?
+    
+    var body: some View {
+        ZStack(alignment: .top) {
+            Color(.white)
+            GeometryReader { geometry in
+                VStack(alignment: .leading) {
+                    AsyncImage(url: URL(string: imageURL ?? ""))
+                        .frame(height: geometry.size.width/2)
+                        .cornerRadius(10)
+                        
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(title ?? "")
+                            .font(.system(size: 10, weight: .regular, design: .default))
+                    }
+                }
+            }
+            .padding()
+        }
+    }
 }

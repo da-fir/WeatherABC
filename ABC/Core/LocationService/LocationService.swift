@@ -8,29 +8,36 @@
 import Foundation
 import CoreLocation
 
-protocol LocationServiceDelegate: AnyObject {
+public protocol LocationServiceDelegate: AnyObject {
     func locationServiceDidUpdate(_ status: CLAuthorizationStatus)
-    func userLocationDidUpdate(location: CLLocation)
+    func userLocationDidUpdate(location: (String?, String?, Error?))
 }
-protocol LocationServiceProtocol: AnyObject {
+public protocol LocationServiceProtocol: AnyObject {
     var delegate: LocationServiceDelegate? { get set }
     func requestPermissionIfNeeded()
     func requestUserLocation()
+    func requestUserLocation(handler: ((_ city: String?, _ country:  String?, _ error: Error?) -> Void)?)
 }
 
-final class LocationService: NSObject, LocationServiceProtocol {
-    weak var delegate: LocationServiceDelegate?
+public final class LocationService: NSObject, LocationServiceProtocol {
+    public weak var delegate: LocationServiceDelegate?
     private let locationManager: CLLocationManager
+    private var handler: ((_ city: String?, _ country:  String?, _ error: Error?) -> Void)?
     
-    override init() {
+    public override init() {
         locationManager = CLLocationManager()
         super.init()
         
         locationManager.delegate = self
     }
     
-    func requestPermissionIfNeeded() {
-        let currentStatus = CLLocationManager.authorizationStatus()
+    public func requestPermissionIfNeeded() {
+        let currentStatus: CLAuthorizationStatus
+        if #available(iOS 14, *) {
+            currentStatus = CLLocationManager().authorizationStatus
+        } else {
+            currentStatus = CLLocationManager.authorizationStatus()
+        }
         
         // Only ask authorization if it was never asked before
         guard currentStatus == .notDetermined else { return }
@@ -38,13 +45,19 @@ final class LocationService: NSObject, LocationServiceProtocol {
         self.locationManager.requestWhenInUseAuthorization()
     }
     
-    func requestUserLocation() {
+    public func requestUserLocation() {
         locationManager.requestLocation()
+    }
+    
+    public func requestUserLocation(handler: ((_ city: String?, _ country:  String?, _ error: Error?) -> Void)?) {
+        self.handler = handler
+        print("KODOK>>> YEEY")
+        requestUserLocation()
     }
 }
 
 extension LocationService: CLLocationManagerDelegate {
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+    public func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         let authorizationStatus: CLAuthorizationStatus
         if #available(iOS 14, *) {
             authorizationStatus = manager.authorizationStatus
@@ -58,13 +71,17 @@ extension LocationService: CLLocationManagerDelegate {
         delegate?.locationServiceDidUpdate(authorizationStatus)
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        delegate?.userLocationDidUpdate(location: location)
-        print("Latitude: \(location.coordinate.latitude), Longitude: \(location.coordinate.longitude)")
+        location.fetchCityAndCountry { city, country, error in
+            self.handler?(city, country, error)// send to handler if any
+            self.delegate?.userLocationDidUpdate(location: (city, country, error))
+            print("Latitude: \(location.coordinate.latitude), Longitude: \(location.coordinate.longitude)")
+        }
+        
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         locationManager.stopUpdatingLocation()
         
         if let clErr = error as? CLError {
@@ -83,5 +100,11 @@ extension LocationService: CLLocationManagerDelegate {
         } else {
             print("Unknown error occurred while handling location manager error: \(error.localizedDescription)")
         }
+    }
+}
+
+private extension CLLocation {
+    func fetchCityAndCountry(completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
+        CLGeocoder().reverseGeocodeLocation(self) { completion($0?.first?.locality, $0?.first?.country, $1) }
     }
 }

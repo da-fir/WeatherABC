@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F0D78D02C62E3AA00C9A79E /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6235F32C6038DF0015C2E2 /* LocationService.swift */; };
 		2F45D3FD2C61959E00412C43 /* HomepageContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F45D3FC2C61959E00412C43 /* HomepageContracts.swift */; };
 		2F45D41E2C61960B00412C43 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F45D41D2C61960B00412C43 /* WidgetKit.framework */; };
 		2F45D4202C61960B00412C43 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F45D41F2C61960B00412C43 /* SwiftUI.framework */; };
@@ -71,6 +72,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2F0D78CE2C62DF8400C9A79E /* ABC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ABC.entitlements; sourceTree = "<group>"; };
+		2F0D78CF2C62E07F00C9A79E /* ABCWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ABCWidgetExtension.entitlements; path = ABCWidgetExtension/ABCWidgetExtension.entitlements; sourceTree = "<group>"; };
 		2F45D3FC2C61959E00412C43 /* HomepageContracts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomepageContracts.swift; sourceTree = "<group>"; };
 		2F45D41B2C61960B00412C43 /* ABCWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ABCWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F45D41D2C61960B00412C43 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -167,6 +170,7 @@
 		2FCE1CDC2C5E57CA00483264 = {
 			isa = PBXGroup;
 			children = (
+				2F0D78CF2C62E07F00C9A79E /* ABCWidgetExtension.entitlements */,
 				2FCE1CE72C5E57CA00483264 /* ABC */,
 				2FCE1CFE2C5E57CC00483264 /* ABCTests */,
 				2FCE1D082C5E57CC00483264 /* ABCUITests */,
@@ -190,6 +194,7 @@
 		2FCE1CE72C5E57CA00483264 /* ABC */ = {
 			isa = PBXGroup;
 			children = (
+				2F0D78CE2C62DF8400C9A79E /* ABC.entitlements */,
 				2FCE1D1F2C5E6DE300483264 /* AppCoordinator.swift */,
 				2FCE1CE82C5E57CA00483264 /* AppDelegate.swift */,
 				2FCE1CEA2C5E57CA00483264 /* SceneDelegate.swift */,
@@ -451,6 +456,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F0D78D02C62E3AA00C9A79E /* LocationService.swift in Sources */,
 				2F45D4252C61960B00412C43 /* ABCWidget.swift in Sources */,
 				2F45D4232C61960B00412C43 /* ABCWidgetBundle.swift in Sources */,
 			);
@@ -536,6 +542,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ABCWidgetExtension/ABCWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2JFA76625J;
@@ -564,6 +571,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ABCWidgetExtension/ABCWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2JFA76625J;
@@ -712,6 +720,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ABC/ABC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2JFA76625J;
@@ -741,6 +750,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ABC/ABC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2JFA76625J;

@@ -44,10 +44,8 @@ extension HomepageViewModel: ImagePickerServiceDelegate {
 }
 
 extension HomepageViewModel: LocationServiceDelegate {
-    func userLocationDidUpdate(location: CLLocation) {
-        location.fetchCityAndCountry(completion: { city, country, error in
-            print("KODOK", city, country)
-        })
+    func userLocationDidUpdate(location: (String?, String?, Error?)) {
+        print("KODOK", location.0, location.1)
     }
     
     func locationServiceDidUpdate(_ status: CLAuthorizationStatus) {
@@ -60,12 +58,6 @@ extension HomepageViewModel: LocationServiceDelegate {
         default:
             print("default")
         }
-    }
-}
-
-extension CLLocation {
-    func fetchCityAndCountry(completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
-        CLGeocoder().reverseGeocodeLocation(self) { completion($0?.first?.locality, $0?.first?.country, $1) }
     }
 }
 
