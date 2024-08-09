@@ -5,6 +5,7 @@
 //  Created by Destriana Orchidea on 03/08/24.
 //
 
+import ABCCore
 import Foundation
 import CoreLocation
 import UIKit
@@ -16,9 +17,11 @@ protocol HomepageNavigationDelegate: AnyObject {
 class HomepageViewModel: HomepageViewModelProtocol {
     private(set) weak var navigationDelegate: HomepageNavigationDelegate!
     private var locationService: LocationServiceProtocol
+    private var resourceService: ResourcesServiceProtocol
     
-    init(navigationDelegate: HomepageNavigationDelegate, locationSerice: LocationServiceProtocol) {
+    init(navigationDelegate: HomepageNavigationDelegate, locationSerice: LocationServiceProtocol, resourceService: ResourcesServiceProtocol) {
         self.navigationDelegate = navigationDelegate
+        self.resourceService = resourceService
         self.locationService = locationSerice
         self.locationService.delegate = self
     }
@@ -35,7 +38,7 @@ class HomepageViewModel: HomepageViewModelProtocol {
 
 extension HomepageViewModel: ImagePickerServiceDelegate {
     func imagePicker(_ imagePicker: ImagePickerService, didSelect image: UIImage) {
-        print("KODOK", image.size)
+        resourceService.setWidgetBackgroundImage(image: image)
     }
 
     func cancelButtonDidClick(on imagePicker: ImagePickerService) {

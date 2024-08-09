@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2F0D78D02C62E3AA00C9A79E /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6235F32C6038DF0015C2E2 /* LocationService.swift */; };
+		2F0D790A2C658C9300C9A79E /* ABCCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F0D79092C658C9300C9A79E /* ABCCore.framework */; };
+		2F0D790B2C658C9300C9A79E /* ABCCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2F0D79092C658C9300C9A79E /* ABCCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2F45D3FD2C61959E00412C43 /* HomepageContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F45D3FC2C61959E00412C43 /* HomepageContracts.swift */; };
 		2F45D41E2C61960B00412C43 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F45D41D2C61960B00412C43 /* WidgetKit.framework */; };
 		2F45D4202C61960B00412C43 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F45D41F2C61960B00412C43 /* SwiftUI.framework */; };
@@ -18,7 +19,6 @@
 		2F6235ED2C5E7B170015C2E2 /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6235EC2C5E7B170015C2E2 /* HomepageViewController.swift */; };
 		2F6235F02C5F7DFC0015C2E2 /* ImagePickerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6235EF2C5F7DFC0015C2E2 /* ImagePickerCoordinator.swift */; };
 		2F6235F22C5F80830015C2E2 /* ImagePickerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6235F12C5F80830015C2E2 /* ImagePickerService.swift */; };
-		2F6235F42C6038DF0015C2E2 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6235F32C6038DF0015C2E2 /* LocationService.swift */; };
 		2FCE1CE92C5E57CA00483264 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCE1CE82C5E57CA00483264 /* AppDelegate.swift */; };
 		2FCE1CEB2C5E57CA00483264 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCE1CEA2C5E57CA00483264 /* SceneDelegate.swift */; };
 		2FCE1CF02C5E57CA00483264 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FCE1CEE2C5E57CA00483264 /* Main.storyboard */; };
@@ -58,6 +58,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		2F0D79002C6586F000C9A79E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2F0D790B2C658C9300C9A79E /* ABCCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2F45D42C2C61960E00412C43 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -74,6 +85,7 @@
 /* Begin PBXFileReference section */
 		2F0D78CE2C62DF8400C9A79E /* ABC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ABC.entitlements; sourceTree = "<group>"; };
 		2F0D78CF2C62E07F00C9A79E /* ABCWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ABCWidgetExtension.entitlements; path = ABCWidgetExtension/ABCWidgetExtension.entitlements; sourceTree = "<group>"; };
+		2F0D79092C658C9300C9A79E /* ABCCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ABCCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F45D3FC2C61959E00412C43 /* HomepageContracts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomepageContracts.swift; sourceTree = "<group>"; };
 		2F45D41B2C61960B00412C43 /* ABCWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ABCWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F45D41D2C61960B00412C43 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -85,7 +97,6 @@
 		2F6235EC2C5E7B170015C2E2 /* HomepageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageViewController.swift; sourceTree = "<group>"; };
 		2F6235EF2C5F7DFC0015C2E2 /* ImagePickerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerCoordinator.swift; sourceTree = "<group>"; };
 		2F6235F12C5F80830015C2E2 /* ImagePickerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerService.swift; sourceTree = "<group>"; };
-		2F6235F32C6038DF0015C2E2 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		2FCE1CE52C5E57CA00483264 /* ABC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ABC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FCE1CE82C5E57CA00483264 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2FCE1CEA2C5E57CA00483264 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F0D790A2C658C9300C9A79E /* ABCCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +153,7 @@
 		2F45D41C2C61960B00412C43 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2F0D79092C658C9300C9A79E /* ABCCore.framework */,
 				2F45D41D2C61960B00412C43 /* WidgetKit.framework */,
 				2F45D41F2C61960B00412C43 /* SwiftUI.framework */,
 			);
@@ -228,18 +241,9 @@
 			children = (
 				2FCE1D212C5E6DF700483264 /* Coordinator */,
 				2FCE1D1D2C5E674800483264 /* View */,
-				2FCE1D1B2C5E58C000483264 /* LocationService */,
 				2FCE1D1A2C5E581A00483264 /* ImagePicker */,
-				2FCE1D192C5E581000483264 /* Network */,
 			);
 			path = Core;
-			sourceTree = "<group>";
-		};
-		2FCE1D192C5E581000483264 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Network;
 			sourceTree = "<group>";
 		};
 		2FCE1D1A2C5E581A00483264 /* ImagePicker */ = {
@@ -249,14 +253,6 @@
 				2F6235F12C5F80830015C2E2 /* ImagePickerService.swift */,
 			);
 			path = ImagePicker;
-			sourceTree = "<group>";
-		};
-		2FCE1D1B2C5E58C000483264 /* LocationService */ = {
-			isa = PBXGroup;
-			children = (
-				2F6235F32C6038DF0015C2E2 /* LocationService.swift */,
-			);
-			path = LocationService;
 			sourceTree = "<group>";
 		};
 		2FCE1D1C2C5E662400483264 /* Page */ = {
@@ -322,6 +318,7 @@
 				2FCE1CE22C5E57CA00483264 /* Frameworks */,
 				2FCE1CE32C5E57CA00483264 /* Resources */,
 				2F45D42C2C61960E00412C43 /* Embed Foundation Extensions */,
+				2F0D79002C6586F000C9A79E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -456,7 +453,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F0D78D02C62E3AA00C9A79E /* LocationService.swift in Sources */,
 				2F45D4252C61960B00412C43 /* ABCWidget.swift in Sources */,
 				2F45D4232C61960B00412C43 /* ABCWidgetBundle.swift in Sources */,
 			);
@@ -468,7 +464,6 @@
 			files = (
 				2FCE1D202C5E6DE300483264 /* AppCoordinator.swift in Sources */,
 				2FCE1D252C5E6E4C00483264 /* Coordinator.swift in Sources */,
-				2F6235F42C6038DF0015C2E2 /* LocationService.swift in Sources */,
 				2FCE1D292C5E6F3800483264 /* HomepageViewModel.swift in Sources */,
 				2FCE1CE92C5E57CA00483264 /* AppDelegate.swift in Sources */,
 				2F6235F02C5F7DFC0015C2E2 /* ImagePickerCoordinator.swift in Sources */,

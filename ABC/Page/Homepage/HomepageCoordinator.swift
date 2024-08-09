@@ -5,6 +5,7 @@
 //  Created by Destriana Orchidea on 03/08/24.
 //
 
+import ABCCore
 import Foundation
 import UIKit
 
@@ -23,7 +24,7 @@ class HomepageCoordinator : Coordinator {
     func start() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: .main)
         if let homepageViewController: HomepageViewController = storyboard.instantiateViewController(withIdentifier: "HomepageViewController") as? HomepageViewController {
-            let homepageViewModel: HomepageViewModel = HomepageViewModel(navigationDelegate: self, locationSerice: LocationService())
+            let homepageViewModel: HomepageViewModel = HomepageViewModel(navigationDelegate: self, locationSerice: LocationService(), resourceService: ResourcesService())
             homepageViewController.viewModel = homepageViewModel
             navigationController.pushViewController(homepageViewController, animated: true)
         }
