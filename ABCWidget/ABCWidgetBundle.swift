@@ -11,6 +11,6 @@ import SwiftUI
 @main
 struct ABCWidgetBundle: WidgetBundle {
     var body: some Widget {
-        WeatherWidget()
+        ABCWeatherWidget()
     }
 }

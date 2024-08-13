@@ -12,29 +12,31 @@ import SwiftUI
 struct Provider: TimelineProvider {
     private var locationService: LocationServiceProtocol = LocationService()
     private var resourceService: ResourcesServiceProtocol = ResourcesService()
+    private var networkManager: NetworkManagerProtocol = NetworkManager()
     
     func placeholder(in context: Context) -> WidgetEntry {
-        print("Widget", "placeholder")
         return WidgetEntry(date: Date(), icon: nil, image: resourceService.getWidgetBackgroundImage(), title: "Surabaya, Indonesia")
     }
     
     func getSnapshot(in context: Context, completion: @escaping (WidgetEntry) -> ()) {
         let entry = WidgetEntry(date: Date(), icon: nil, image: resourceService.getWidgetBackgroundImage(), title: "Mumbai, India")
         completion(entry)
-        print("Widget", "getSnapshoted")
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        print("Widget", "locationService")
         locationService.requestPermissionIfNeeded()
-        
-        print("Widget", "locationService - ED1", locationService.locationManager.authorizationStatus.rawValue)
-        
-        locationService.requestUserLocation { city, country, error in
-            let entry = WidgetEntry(date: Date(), icon: resourceService.loadLocalImage(image: "Rain"), image: resourceService.getWidgetBackgroundImage(), title: "\(city ?? ""), \(country ?? "")")
-            let refreshDate = Calendar.current.date(byAdding: .minute, value: 60, to: Date())
-            let timeline = Timeline(entries: [entry], policy: .after(refreshDate!))
-            completion(timeline)
+        locationService.requestUserLocation { currentLocationResult in
+            Task {
+                if let response: WeatherResponse = try? await self.networkManager.asyncRequest(endpoint: .weather(currentLocationResult.location)) {
+                    let mainWeatherIcon = response.weather?.first?.main?.imageName ?? "Rain"
+                    let entry = WidgetEntry(date: Date(), icon: resourceService.loadLocalImage(image: mainWeatherIcon), image: resourceService.getWidgetBackgroundImage(), title: "\(currentLocationResult.city ?? ""), \(currentLocationResult.country ?? "")")
+                    let refreshDate = Calendar.current.date(byAdding: .minute, value: 60, to: Date())
+                    let timeline = Timeline(entries: [entry], policy: .after(refreshDate!))
+                    completion(timeline)
+                } else {
+                    print("Failed to fetch.")
+                }
+            }
         }
     }
 }
@@ -50,11 +52,11 @@ struct WeatherWidgetEntryView: View {
     var entry: Provider.Entry
     
     var body: some View {
-        WeatherWidgetView(icon: entry.icon, image: entry.image, title: entry.title)
+        ABCWeatherWidgetView(icon: entry.icon, image: entry.image, title: entry.title)
     }
 }
 
-struct WeatherWidget: Widget {
+struct ABCWeatherWidget: Widget {
     let kind: String = "ABCWeatherWidget"
     
     var body: some WidgetConfiguration {
@@ -68,7 +70,7 @@ struct WeatherWidget: Widget {
     }
 }
 
-struct WeatherWidgetView: View {
+struct ABCWeatherWidgetView: View {
     let icon: UIImage?
     let image: UIImage?
     let title: String?
@@ -77,107 +79,43 @@ struct WeatherWidgetView: View {
     
     @ViewBuilder
     var body: some View {
-        switch family {
-        case .systemSmall:
-            ABCWeatherWidgetSmallView(icon: icon, image: image, title: title)
-        case .systemMedium:
-            ABCWeatherWidgetMediumView(icon: icon, image: image, title: title)
-        case .systemLarge:
-            ABCWeatherWidgetLargeView(icon: icon, image: image, title: title)
-        default:
-            EmptyView()
-        }
+        ABCWeatherWidgetAllSizeView(icon: icon, image: image, title: title)
     }
 }
 
-struct ABCWeatherWidgetSmallView: View {
+struct ABCWeatherWidgetAllSizeView: View {
     let icon: UIImage?
     let image: UIImage?
     let title: String?
     
     var body: some View {
-        ZStack(alignment: .top) {
-            Image(uiImage: image ?? UIImage())
-                .resizable()
-                .aspectRatio(
-                    contentMode: .fill
-                )
-            VStack(alignment: .center) {
-                Image(uiImage: icon ?? UIImage())
+        GeometryReader { geometry in
+            ZStack {
+                Image(uiImage: image ?? UIImage())
                     .resizable()
-                    .frame(width: 67)
-                    .frame(height: 67)
                     .aspectRatio(
-                        contentMode: .fit
+                        contentMode: .fill
+                    )
+                    .frame(
+                        maxWidth: geometry.size.width,
+                        maxHeight: geometry.size.height
                     )
                 
-                Text("\(title ?? "")")
-                    .font(.system(size: 18, weight: .semibold, design: .default))
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(3)
-                    .frame(maxHeight: .infinity)
-                    .frame(maxWidth: .infinity)
-                    .padding(.leading, 16)
-            }
-            .frame(maxHeight: .infinity)
-            .frame(maxWidth: .infinity)
-            .padding(.leading, 16)
-        }
-    }
-}
-
-struct ABCWeatherWidgetMediumView: View {
-    let icon: UIImage?
-    let image: UIImage?
-    let title: String?
-    
-    var body: some View {
-        ZStack(alignment: .top) {
-            Image(uiImage: image ?? UIImage())
-                .resizable()
-                .aspectRatio(
-                    contentMode: .fill
-                )
-            VStack(alignment: .center) {
-                Image(uiImage: icon ?? UIImage())
-                    .resizable()
-                    .frame(width: 82)
-                    .frame(height: 82)
-                    .aspectRatio(
-                        contentMode: .fit
-                    )
-                Text("\(title ?? "")")
-                    .font(.system(size: 16, weight: .regular, design: .default))
-                    .multilineTextAlignment(.center)
-                Text("\(title ?? "")")
-                    .font(.system(size: 24, weight: .semibold, design: .default))
-                    .multilineTextAlignment(.center)
-            }
-            .padding(6)
-        }
-    }
-}
-
-struct ABCWeatherWidgetLargeView: View {
-    let icon: UIImage?
-    let image: UIImage?
-    let title: String?
-    
-    var body: some View {
-        ZStack(alignment: .top) {
-            Color(.white)
-            GeometryReader { geometry in
-                VStack(alignment: .leading) {
-                    Text("\(title ?? "")")
-                        .font(.system(size: 16, weight: .semibold, design: .default))
-                        .multilineTextAlignment(.leading)
+                VStack(alignment: .center) {
+                    Image(uiImage: icon ?? UIImage())
+                        .resizable()
+                        .frame(width: 67)
+                        .frame(height: 67)
+                        .aspectRatio(
+                            contentMode: .fill
+                        )
                     
-                    Image(uiImage: image ?? UIImage())
-                        .frame(height: geometry.size.width / 2)
-                        .cornerRadius(10)
+                    Text(title ?? "")
+                        .padding(16)
+                        .font(.headline)
+                        .minimumScaleFactor(0.01)
                 }
             }
-            .padding()
         }
     }
 }

@@ -14,6 +14,15 @@
 		2F0D78FC2C6585F300C9A79E /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0D78FB2C6585F300C9A79E /* LocationService.swift */; };
 		2F0D79082C6589AB00C9A79E /* ResourcesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0D79072C6589AB00C9A79E /* ResourcesService.swift */; };
 		2F0D790F2C65A00A00C9A79E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F0D790E2C65A00A00C9A79E /* Assets.xcassets */; };
+		2F0D791F2C6AA92400C9A79E /* CurrentLocationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0D791C2C6AA92400C9A79E /* CurrentLocationResult.swift */; };
+		2F0D79202C6AA92400C9A79E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0D791E2C6AA92400C9A79E /* NetworkManager.swift */; };
+		2F0D792B2C6AC4AB00C9A79E /* Clouds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0D79252C6AC4AA00C9A79E /* Clouds.swift */; };
+		2F0D792C2C6AC4AB00C9A79E /* Wind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0D79262C6AC4AB00C9A79E /* Wind.swift */; };
+		2F0D792D2C6AC4AB00C9A79E /* Sys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0D79272C6AC4AB00C9A79E /* Sys.swift */; };
+		2F0D792E2C6AC4AB00C9A79E /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0D79282C6AC4AB00C9A79E /* Weather.swift */; };
+		2F0D792F2C6AC4AB00C9A79E /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0D79292C6AC4AB00C9A79E /* Main.swift */; };
+		2F0D79302C6AC4AB00C9A79E /* Coord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0D792A2C6AC4AB00C9A79E /* Coord.swift */; };
+		2F0D79322C6AC4D200C9A79E /* WeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0D79312C6AC4D200C9A79E /* WeatherResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +44,15 @@
 		2F0D78FB2C6585F300C9A79E /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		2F0D79072C6589AB00C9A79E /* ResourcesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesService.swift; sourceTree = "<group>"; };
 		2F0D790E2C65A00A00C9A79E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2F0D791C2C6AA92400C9A79E /* CurrentLocationResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentLocationResult.swift; sourceTree = "<group>"; };
+		2F0D791E2C6AA92400C9A79E /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		2F0D79252C6AC4AA00C9A79E /* Clouds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clouds.swift; sourceTree = "<group>"; };
+		2F0D79262C6AC4AB00C9A79E /* Wind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wind.swift; sourceTree = "<group>"; };
+		2F0D79272C6AC4AB00C9A79E /* Sys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sys.swift; sourceTree = "<group>"; };
+		2F0D79282C6AC4AB00C9A79E /* Weather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		2F0D79292C6AC4AB00C9A79E /* Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		2F0D792A2C6AC4AB00C9A79E /* Coord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coord.swift; sourceTree = "<group>"; };
+		2F0D79312C6AC4D200C9A79E /* WeatherResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +132,8 @@
 		2F0D79052C65889B00C9A79E /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				2F0D79332C6AC4DA00C9A79E /* Models */,
+				2F0D791D2C6AA92400C9A79E /* Manager */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -124,6 +144,29 @@
 				2F0D79072C6589AB00C9A79E /* ResourcesService.swift */,
 			);
 			path = ResourcesService;
+			sourceTree = "<group>";
+		};
+		2F0D791D2C6AA92400C9A79E /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				2F0D791E2C6AA92400C9A79E /* NetworkManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		2F0D79332C6AC4DA00C9A79E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2F0D79312C6AC4D200C9A79E /* WeatherResponse.swift */,
+				2F0D79252C6AC4AA00C9A79E /* Clouds.swift */,
+				2F0D792A2C6AC4AB00C9A79E /* Coord.swift */,
+				2F0D79292C6AC4AB00C9A79E /* Main.swift */,
+				2F0D79272C6AC4AB00C9A79E /* Sys.swift */,
+				2F0D79282C6AC4AB00C9A79E /* Weather.swift */,
+				2F0D79262C6AC4AB00C9A79E /* Wind.swift */,
+				2F0D791C2C6AA92400C9A79E /* CurrentLocationResult.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,8 +279,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F0D792F2C6AC4AB00C9A79E /* Main.swift in Sources */,
 				2F0D78FC2C6585F300C9A79E /* LocationService.swift in Sources */,
 				2F0D78E02C65853200C9A79E /* ABCCore.docc in Sources */,
+				2F0D792C2C6AC4AB00C9A79E /* Wind.swift in Sources */,
+				2F0D792D2C6AC4AB00C9A79E /* Sys.swift in Sources */,
+				2F0D792E2C6AC4AB00C9A79E /* Weather.swift in Sources */,
+				2F0D79302C6AC4AB00C9A79E /* Coord.swift in Sources */,
+				2F0D79322C6AC4D200C9A79E /* WeatherResponse.swift in Sources */,
+				2F0D79202C6AA92400C9A79E /* NetworkManager.swift in Sources */,
+				2F0D792B2C6AC4AB00C9A79E /* Clouds.swift in Sources */,
+				2F0D791F2C6AA92400C9A79E /* CurrentLocationResult.swift in Sources */,
 				2F0D79082C6589AB00C9A79E /* ResourcesService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

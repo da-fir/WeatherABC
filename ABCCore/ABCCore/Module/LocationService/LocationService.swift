@@ -10,20 +10,20 @@ import CoreLocation
 
 public protocol LocationServiceDelegate: AnyObject {
     func locationServiceDidUpdate(_ status: CLAuthorizationStatus)
-    func userLocationDidUpdate(location: (String?, String?, Error?))
+    func userLocationDidUpdate(location: (CurrentLocationResult))
 }
 public protocol LocationServiceProtocol: AnyObject {
     var delegate: LocationServiceDelegate? { get set }
     var locationManager: CLLocationManager { get }
     func requestPermissionIfNeeded()
     func requestUserLocation()
-    func requestUserLocation(handler: ((_ city: String?, _ country:  String?, _ error: Error?) -> Void)?)
+    func requestUserLocation(handler: ((CurrentLocationResult) -> Void)?)
 }
 
 public final class LocationService: NSObject, LocationServiceProtocol {
     public weak var delegate: LocationServiceDelegate?
     public let locationManager: CLLocationManager
-    private var handler: ((_ city: String?, _ country:  String?, _ error: Error?) -> Void)?
+    private var handler: ((CurrentLocationResult) -> Void)?
     
     public override init() {
         locationManager = CLLocationManager()
@@ -50,7 +50,7 @@ public final class LocationService: NSObject, LocationServiceProtocol {
         locationManager.requestLocation()
     }
     
-    public func requestUserLocation(handler: ((_ city: String?, _ country:  String?, _ error: Error?) -> Void)?) {
+    public func requestUserLocation(handler: ((CurrentLocationResult) -> Void)?) {
         self.handler = handler
         print("KODOK>>> YEEY")
         requestUserLocation()
@@ -77,8 +77,8 @@ extension LocationService: CLLocationManagerDelegate {
         guard let location = locations.last else { return }
         print("KODOK>>> YEEY2")
         location.fetchCityAndCountry { city, country, error in
-            self.handler?(city, country, error)// send to handler if any
-            self.delegate?.userLocationDidUpdate(location: (city, country, error))
+            self.handler?(CurrentLocationResult(location: location, city: city, country: country, error: error))// send to handler if any
+            self.delegate?.userLocationDidUpdate(location: (CurrentLocationResult(location: location, city: city, country: country, error: error)))
             print("Latitude: \(location.coordinate.latitude), Longitude: \(location.coordinate.longitude)")
         }
         

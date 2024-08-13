@@ -24,7 +24,7 @@ class HomepageCoordinator : Coordinator {
     func start() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: .main)
         if let homepageViewController: HomepageViewController = storyboard.instantiateViewController(withIdentifier: "HomepageViewController") as? HomepageViewController {
-            let homepageViewModel: HomepageViewModel = HomepageViewModel(navigationDelegate: self, locationSerice: LocationService(), resourceService: ResourcesService())
+            let homepageViewModel: HomepageViewModel = HomepageViewModel(navigationDelegate: self, locationSerice: LocationService(), resourceService: ResourcesService(), networkManager: NetworkManager())
             homepageViewController.viewModel = homepageViewModel
             navigationController.pushViewController(homepageViewController, animated: true)
         }

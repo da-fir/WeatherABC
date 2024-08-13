@@ -18,8 +18,10 @@ class HomepageViewModel: HomepageViewModelProtocol {
     private(set) weak var navigationDelegate: HomepageNavigationDelegate!
     private var locationService: LocationServiceProtocol
     private var resourceService: ResourcesServiceProtocol
+    private var networkManager: NetworkManagerProtocol
     
-    init(navigationDelegate: HomepageNavigationDelegate, locationSerice: LocationServiceProtocol, resourceService: ResourcesServiceProtocol) {
+    init(navigationDelegate: HomepageNavigationDelegate, locationSerice: LocationServiceProtocol, resourceService: ResourcesServiceProtocol, networkManager: NetworkManagerProtocol) {
+        self.networkManager = networkManager
         self.navigationDelegate = navigationDelegate
         self.resourceService = resourceService
         self.locationService = locationSerice
@@ -47,8 +49,15 @@ extension HomepageViewModel: ImagePickerServiceDelegate {
 }
 
 extension HomepageViewModel: LocationServiceDelegate {
-    func userLocationDidUpdate(location: (String?, String?, Error?)) {
-        print("KODOK", location.0, location.1)
+    func userLocationDidUpdate(location: (CurrentLocationResult)) {
+        Task {
+            if let response: WeatherResponse = try? await self.networkManager.asyncRequest(endpoint: .weather(location.location))
+            {
+                print("Fetched \(response.weather?.first?.main?.imageName) favorites.")
+            } else {
+                print("Failed to fetch favorites.")
+            }
+        }
     }
     
     func locationServiceDidUpdate(_ status: CLAuthorizationStatus) {
